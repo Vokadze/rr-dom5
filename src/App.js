@@ -13,10 +13,13 @@ function App() {
   return (
     <div>
       <h1>React Router Dom5</h1>
+      <hr />
       <BrowserRouter>
+        <h1>App Layout</h1>
+        <NavLink to="/users">User List Layout</NavLink>
         <Switch>
-          <Route path="/" exact component={MainPage} />
           <Route path="/users" component={UsersLayout} />
+          <Route path="/" exact component={MainPage} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
@@ -33,6 +36,7 @@ function UsersLayout() {
   return (
     <>
       <h1>Users Layout</h1>
+      <NavLink to="/">Main Page</NavLink>
       <Switch>
         <Route path={path + '/:userId/profile'} component={UserProfilePage} />
         <Route path={path + '/:userId/edit'} component={EditUserPage} />
@@ -46,15 +50,43 @@ function UsersLayout() {
 function UserProfilePage() {
   const { userId } = useParams()
   return (
+    //<div>
+    //  <h1>UserPage</h1>
+    //  <p>userId: {userId}</p>
+    //</div>
+
     <div>
       <h1>UserPage</h1>
+      <li>
+        <NavLink to="/users">User List Page</NavLink>
+      </li>
+      <li>
+        <NavLink to={`/users/${userId}/edit`}>Edit this user</NavLink>
+      </li>
       <p>userId: {userId}</p>
     </div>
   )
 }
 
 function EditUserPage() {
-  return <h1>Edit User Page</h1>
+  const { userId } = useParams()
+  //  return <h1>Edit User Page</h1>
+  return (
+    <div>
+      <h1>Edit User Page</h1>
+      <ul>
+        <li>
+          <NavLink to={'/users/' + userId}>User profile Page</NavLink>
+        </li>
+        <li>
+          <NavLink to={'/users/' + (+userId + 1)}>Another User</NavLink>
+        </li>
+        <li>
+          <NavLink to={'/users/'}>User List Page</NavLink>
+        </li>
+      </ul>
+    </div>
+  )
 }
 
 function UserListPage() {
